@@ -20,12 +20,12 @@ public sealed class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
 
         builder.Property(x => x.EntityName).HasMaxLength(100);
         builder.Property(x => x.EntityId).HasMaxLength(100);
-        builder.Property(x => x.OldValue).HasColumnType("nvarchar(max)");
-        builder.Property(x => x.NewValue).HasColumnType("nvarchar(max)");
+        builder.Property(x => x.OldValue).HasColumnType("text");
+        builder.Property(x => x.NewValue).HasColumnType("text");
 
         builder.Property(x => x.CreatedAt)
-            .HasColumnType("datetime2")
-            .HasDefaultValueSql("SYSUTCDATETIME()")
+            .HasColumnType("timestamp with time zone")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .IsRequired();
 
         builder.HasOne(x => x.User)
@@ -41,3 +41,5 @@ public sealed class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
             .HasDatabaseName("IX_AuditLogs_UserId_CreatedAt");
     }
 }
+
+

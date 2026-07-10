@@ -9,6 +9,6 @@ namespace Portfolio.Domain.Common
     public abstract class FullAuditableEntity : BaseSoftDeleteEntity
     {
         [Timestamp]
-        public byte[]? RowVersion { get; set; }
+        public uint Version { get; set; }
     }
 }

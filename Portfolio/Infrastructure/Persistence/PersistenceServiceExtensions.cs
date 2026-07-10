@@ -19,7 +19,7 @@ public static class PersistenceServiceExtensions
                 "Không tìm thấy ConnectionStrings:DefaultConnection trong cấu hình.");
 
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
+            options.UseNpgsql(
                 connectionString,
                 sqlOptions =>
                 {
@@ -27,7 +27,7 @@ public static class PersistenceServiceExtensions
                     sqlOptions.EnableRetryOnFailure(
                         maxRetryCount: 5,
                         maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
+                        errorCodesToAdd: null);
                 }));
 
         services.Configure<AdminSeedOptions>(

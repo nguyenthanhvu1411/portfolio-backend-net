@@ -20,8 +20,8 @@ public sealed class UploadedFileConfiguration : IEntityTypeConfiguration<Uploade
         builder.Property(x => x.FileSize).IsRequired();
 
         builder.Property(x => x.CreatedAt)
-            .HasColumnType("datetime2")
-            .HasDefaultValueSql("SYSUTCDATETIME()")
+            .HasColumnType("timestamp with time zone")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .IsRequired();
 
         builder.HasOne(x => x.User)
@@ -37,3 +37,5 @@ public sealed class UploadedFileConfiguration : IEntityTypeConfiguration<Uploade
             .HasDatabaseName("IX_UploadedFiles_StoredFileName");
     }
 }
+
+

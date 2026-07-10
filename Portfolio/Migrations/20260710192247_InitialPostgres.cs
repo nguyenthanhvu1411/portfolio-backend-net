@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Portfolio.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,12 +18,12 @@ namespace Portfolio.Migrations
                 name: "BlogCategories",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    slug = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    slug = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -33,10 +34,10 @@ namespace Portfolio.Migrations
                 name: "BlogTags",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    slug = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    slug = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,17 +48,17 @@ namespace Portfolio.Migrations
                 name: "Certificates",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    organization = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    organization = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     issue_date = table.Column<DateTime>(type: "date", nullable: true),
                     expiry_date = table.Column<DateTime>(type: "date", nullable: true),
-                    credential_id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    credential_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    image_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    credential_id = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    credential_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    image_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -68,16 +69,16 @@ namespace Portfolio.Migrations
                 name: "ContactMessages",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    full_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    company = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    subject = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()")
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    full_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    phone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    company = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    subject = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    message = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -88,17 +89,17 @@ namespace Portfolio.Migrations
                 name: "Education",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    school_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    major = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    degree = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    start_year = table.Column<int>(type: "int", nullable: true),
-                    end_year = table.Column<int>(type: "int", nullable: true),
-                    gpa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    logo_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    school_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    major = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    degree = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    start_year = table.Column<int>(type: "integer", nullable: true),
+                    end_year = table.Column<int>(type: "integer", nullable: true),
+                    gpa = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    logo_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -109,19 +110,19 @@ namespace Portfolio.Migrations
                 name: "Experiences",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    position = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    company = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    company_logo_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    location = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    position = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    company = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    company_logo_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    location = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     start_date = table.Column<DateTime>(type: "date", nullable: false),
                     end_date = table.Column<DateTime>(type: "date", nullable: true),
-                    is_current = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    technologies = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    display_order = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    is_current = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    technologies = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    display_order = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -132,22 +133,22 @@ namespace Portfolio.Migrations
                 name: "Profiles",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    full_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    job_title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    short_bio = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    about_me = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    avatar_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    banner_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    cv_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    github_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    linkedin_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    facebook_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    full_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    job_title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    short_bio = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    about_me = table.Column<string>(type: "text", nullable: true),
+                    avatar_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    banner_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    cv_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    phone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    address = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    github_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    linkedin_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    facebook_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -158,22 +159,22 @@ namespace Portfolio.Migrations
                 name: "Projects",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    project_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    slug = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    short_description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    full_description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    role = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    project_type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    thumbnail_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    github_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    demo_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    project_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    slug = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    short_description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    full_description = table.Column<string>(type: "text", nullable: true),
+                    role = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    project_type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    thumbnail_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    github_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    demo_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     start_date = table.Column<DateTime>(type: "date", nullable: true),
                     end_date = table.Column<DateTime>(type: "date", nullable: true),
-                    status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    is_featured = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    status = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    is_featured = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -184,10 +185,10 @@ namespace Portfolio.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,16 +199,16 @@ namespace Portfolio.Migrations
                 name: "Settings",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    site_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    logo_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    favicon_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    theme_color = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    seo_title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    seo_description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    contact_email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    footer_text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    site_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    logo_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    favicon_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    theme_color = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
+                    seo_title = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    seo_description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    contact_email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    footer_text = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -218,12 +219,12 @@ namespace Portfolio.Migrations
                 name: "SkillCategories",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    display_order = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    display_order = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -234,16 +235,16 @@ namespace Portfolio.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    password_hash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    full_name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    avatar_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    last_login_at = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()"),
-                    updated_at = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    password_hash = table.Column<string>(type: "text", nullable: false),
+                    full_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    avatar_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    status = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    last_login_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -254,18 +255,18 @@ namespace Portfolio.Migrations
                 name: "Blogs",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    category_id = table.Column<int>(type: "int", nullable: false),
-                    title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    slug = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    summary = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    thumbnail_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    published_at = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    view_count = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    is_featured = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    category_id = table.Column<int>(type: "integer", nullable: false),
+                    title = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    slug = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    summary = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    content = table.Column<string>(type: "text", nullable: false),
+                    thumbnail_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    status = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    published_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    view_count = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    is_featured = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -282,13 +283,13 @@ namespace Portfolio.Migrations
                 name: "ProjectImages",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    project_id = table.Column<int>(type: "int", nullable: false),
-                    image_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    caption = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    display_order = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    is_thumbnail = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    project_id = table.Column<int>(type: "integer", nullable: false),
+                    image_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    caption = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    display_order = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    is_thumbnail = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -305,16 +306,16 @@ namespace Portfolio.Migrations
                 name: "Skills",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    category_id = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    level = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    icon_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    display_order = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    is_featured = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    is_active = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    category_id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    level = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
+                    icon_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    display_order = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    is_featured = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -331,15 +332,15 @@ namespace Portfolio.Migrations
                 name: "AuditLogs",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    user_id = table.Column<int>(type: "int", nullable: true),
-                    action = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    entity_name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    entity_id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    old_value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    new_value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()")
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    user_id = table.Column<int>(type: "integer", nullable: true),
+                    action = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    entity_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    entity_id = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    old_value = table.Column<string>(type: "text", nullable: true),
+                    new_value = table.Column<string>(type: "text", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -356,12 +357,12 @@ namespace Portfolio.Migrations
                 name: "RefreshTokens",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    user_id = table.Column<int>(type: "int", nullable: false),
-                    token = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    expires_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    revoked_at = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    token = table.Column<string>(type: "character varying(64)", unicode: false, maxLength: 64, nullable: false),
+                    expires_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    revoked_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -378,15 +379,15 @@ namespace Portfolio.Migrations
                 name: "UploadedFiles",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    original_file_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    stored_file_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    file_url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    content_type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    original_file_name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    stored_file_name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    file_url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    content_type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     file_size = table.Column<long>(type: "bigint", nullable: false),
-                    uploaded_by = table.Column<int>(type: "int", nullable: true),
-                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()")
+                    uploaded_by = table.Column<int>(type: "integer", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -403,8 +404,8 @@ namespace Portfolio.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    user_id = table.Column<int>(type: "int", nullable: false),
-                    role_id = table.Column<int>(type: "int", nullable: false)
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    role_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -427,8 +428,8 @@ namespace Portfolio.Migrations
                 name: "BlogTagMappings",
                 columns: table => new
                 {
-                    blog_id = table.Column<int>(type: "int", nullable: false),
-                    tag_id = table.Column<int>(type: "int", nullable: false)
+                    blog_id = table.Column<int>(type: "integer", nullable: false),
+                    tag_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -451,14 +452,14 @@ namespace Portfolio.Migrations
                 name: "ViewStatistics",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    blog_id = table.Column<int>(type: "int", nullable: true),
-                    project_id = table.Column<int>(type: "int", nullable: true),
-                    page_path = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    ip_address = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    user_agent = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    viewed_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "SYSUTCDATETIME()")
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    blog_id = table.Column<int>(type: "integer", nullable: true),
+                    project_id = table.Column<int>(type: "integer", nullable: true),
+                    page_path = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    ip_address = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
+                    user_agent = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    viewed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -481,8 +482,8 @@ namespace Portfolio.Migrations
                 name: "ProjectSkills",
                 columns: table => new
                 {
-                    project_id = table.Column<int>(type: "int", nullable: false),
-                    skill_id = table.Column<int>(type: "int", nullable: false)
+                    project_id = table.Column<int>(type: "integer", nullable: false),
+                    skill_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -773,6 +774,12 @@ namespace Portfolio.Migrations
                 name: "IX_RefreshTokens_UserId_ExpiresAt",
                 table: "RefreshTokens",
                 columns: new[] { "user_id", "expires_at" });
+
+            migrationBuilder.CreateIndex(
+                name: "UX_RefreshTokens_Token",
+                table: "RefreshTokens",
+                column: "token",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "UX_Roles_Name",

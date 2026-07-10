@@ -20,7 +20,7 @@ public sealed class ExperienceConfiguration : IEntityTypeConfiguration<Experienc
         builder.Property(x => x.StartDate).HasColumnType("date").IsRequired();
         builder.Property(x => x.EndDate).HasColumnType("date");
         builder.Property(x => x.IsCurrent).HasDefaultValue(false).IsRequired();
-        builder.Property(x => x.Description).HasColumnType("nvarchar(max)");
+        builder.Property(x => x.Description).HasColumnType("text");
         builder.Property(x => x.Technologies).HasMaxLength(500);
         builder.Property(x => x.DisplayOrder).HasDefaultValue(0).IsRequired();
         builder.Property(x => x.IsActive).HasDefaultValue(true).IsRequired();
@@ -29,3 +29,4 @@ public sealed class ExperienceConfiguration : IEntityTypeConfiguration<Experienc
             .HasDatabaseName("IX_Experiences_IsActive_DisplayOrder");
     }
 }
+

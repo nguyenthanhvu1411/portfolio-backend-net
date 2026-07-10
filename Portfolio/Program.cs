@@ -43,6 +43,7 @@ builder.Services
     });
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -84,7 +85,7 @@ var connectionString =
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options
-        .UseSqlServer(connectionString)
+        .UseNpgsql(connectionString)
         .UseSnakeCaseNamingConvention();
 });
 
@@ -268,5 +269,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

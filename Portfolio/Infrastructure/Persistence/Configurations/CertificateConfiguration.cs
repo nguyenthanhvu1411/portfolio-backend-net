@@ -20,10 +20,11 @@ public sealed class CertificateConfiguration : IEntityTypeConfiguration<Certific
         builder.Property(x => x.CredentialId).HasMaxLength(100);
         builder.Property(x => x.CredentialUrl).HasMaxLength(500);
         builder.Property(x => x.ImageUrl).HasMaxLength(500);
-        builder.Property(x => x.Description).HasColumnType("nvarchar(max)");
+        builder.Property(x => x.Description).HasColumnType("text");
         builder.Property(x => x.IsActive).HasDefaultValue(true).IsRequired();
 
         builder.HasIndex(x => x.IsActive)
             .HasDatabaseName("IX_Certificates_IsActive");
     }
 }
+

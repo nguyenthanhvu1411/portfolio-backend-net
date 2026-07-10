@@ -19,7 +19,7 @@ public sealed class ContactMessageConfiguration : IEntityTypeConfiguration<Conta
         builder.Property(x => x.Phone).HasMaxLength(50);
         builder.Property(x => x.Company).HasMaxLength(200);
         builder.Property(x => x.Subject).HasMaxLength(250).IsRequired();
-        builder.Property(x => x.Message).HasColumnType("nvarchar(max)").IsRequired();
+        builder.Property(x => x.Message).HasColumnType("text").IsRequired();
 
         builder.Property(x => x.Status)
             .HasConversion<string>()
@@ -27,11 +27,13 @@ public sealed class ContactMessageConfiguration : IEntityTypeConfiguration<Conta
             .IsRequired();
 
         builder.Property(x => x.CreatedAt)
-            .HasColumnType("datetime2")
-            .HasDefaultValueSql("SYSUTCDATETIME()")
+            .HasColumnType("timestamp with time zone")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .IsRequired();
 
         builder.HasIndex(x => new { x.Status, x.CreatedAt })
             .HasDatabaseName("IX_ContactMessages_Status_CreatedAt");
     }
 }
+
+

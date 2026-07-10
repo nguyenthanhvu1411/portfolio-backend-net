@@ -19,8 +19,8 @@ public sealed class ViewStatisticConfiguration : IEntityTypeConfiguration<ViewSt
         builder.Property(x => x.IpAddress).HasMaxLength(64);
         builder.Property(x => x.UserAgent).HasMaxLength(1000);
         builder.Property(x => x.ViewedAt)
-            .HasColumnType("datetime2")
-            .HasDefaultValueSql("SYSUTCDATETIME()")
+            .HasColumnType("timestamp with time zone")
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
             .IsRequired();
 
         builder.HasOne(x => x.Blog)
@@ -45,3 +45,5 @@ public sealed class ViewStatisticConfiguration : IEntityTypeConfiguration<ViewSt
             .HasDatabaseName("IX_ViewStatistics_PagePath_ViewedAt");
     }
 }
+
+

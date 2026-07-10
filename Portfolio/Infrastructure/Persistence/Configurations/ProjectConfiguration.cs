@@ -17,7 +17,7 @@ public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(x => x.ProjectName).HasMaxLength(200).IsRequired();
         builder.Property(x => x.Slug).HasMaxLength(250).IsRequired();
         builder.Property(x => x.ShortDescription).HasMaxLength(500);
-        builder.Property(x => x.FullDescription).HasColumnType("nvarchar(max)");
+        builder.Property(x => x.FullDescription).HasColumnType("text");
         builder.Property(x => x.Role).HasMaxLength(100);
         builder.Property(x => x.ProjectType).HasMaxLength(100);
         builder.Property(x => x.ThumbnailUrl).HasMaxLength(500);
@@ -42,3 +42,4 @@ public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasDatabaseName("IX_Projects_PublicDisplay");
     }
 }
+

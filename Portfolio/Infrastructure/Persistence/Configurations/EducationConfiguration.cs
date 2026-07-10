@@ -17,7 +17,7 @@ public sealed class EducationConfiguration : IEntityTypeConfiguration<Education>
         builder.Property(x => x.Major).HasMaxLength(200).IsRequired();
         builder.Property(x => x.Degree).HasMaxLength(100);
         builder.Property(x => x.GPA).HasMaxLength(50);
-        builder.Property(x => x.Description).HasColumnType("nvarchar(max)");
+        builder.Property(x => x.Description).HasColumnType("text");
         builder.Property(x => x.LogoUrl).HasMaxLength(500);
         builder.Property(x => x.IsActive).HasDefaultValue(true).IsRequired();
 
@@ -25,3 +25,4 @@ public sealed class EducationConfiguration : IEntityTypeConfiguration<Education>
             .HasDatabaseName("IX_Education_IsActive");
     }
 }
+

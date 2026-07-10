@@ -17,7 +17,7 @@ public sealed class BlogConfiguration : IEntityTypeConfiguration<Blog>
         builder.Property(x => x.Title).HasMaxLength(250).IsRequired();
         builder.Property(x => x.Slug).HasMaxLength(300).IsRequired();
         builder.Property(x => x.Summary).HasMaxLength(500);
-        builder.Property(x => x.Content).HasColumnType("nvarchar(max)").IsRequired();
+        builder.Property(x => x.Content).HasColumnType("text").IsRequired();
         builder.Property(x => x.ThumbnailUrl).HasMaxLength(500);
 
         builder.Property(x => x.Status)
@@ -25,7 +25,7 @@ public sealed class BlogConfiguration : IEntityTypeConfiguration<Blog>
             .HasMaxLength(30)
             .IsRequired();
 
-        builder.Property(x => x.PublishedAt).HasColumnType("datetime2");
+        builder.Property(x => x.PublishedAt).HasColumnType("timestamp with time zone");
         builder.Property(x => x.ViewCount).HasDefaultValue(0).IsRequired();
         builder.Property(x => x.IsFeatured).HasDefaultValue(false).IsRequired();
 
@@ -46,3 +46,4 @@ public sealed class BlogConfiguration : IEntityTypeConfiguration<Blog>
             .HasDatabaseName("IX_Blogs_CategoryId");
     }
 }
+

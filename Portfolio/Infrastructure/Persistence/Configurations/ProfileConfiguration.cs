@@ -16,7 +16,7 @@ public sealed class ProfileConfiguration : IEntityTypeConfiguration<Profile>
         builder.Property(x => x.FullName).HasMaxLength(200).IsRequired();
         builder.Property(x => x.JobTitle).HasMaxLength(200).IsRequired();
         builder.Property(x => x.ShortBio).HasMaxLength(500);
-        builder.Property(x => x.AboutMe).HasColumnType("nvarchar(max)");
+        builder.Property(x => x.AboutMe).HasColumnType("text");
         builder.Property(x => x.AvatarUrl).HasMaxLength(500);
         builder.Property(x => x.BannerUrl).HasMaxLength(500);
         builder.Property(x => x.CvUrl).HasMaxLength(500);
@@ -32,3 +32,4 @@ public sealed class ProfileConfiguration : IEntityTypeConfiguration<Profile>
             .HasDatabaseName("IX_Profiles_IsActive");
     }
 }
+

@@ -27,11 +27,11 @@ public sealed class RefreshTokenConfiguration : IEntityTypeConfiguration<Refresh
             .HasDatabaseName("UX_RefreshTokens_Token");
 
         builder.Property(x => x.ExpiresAt)
-            .HasColumnType("datetime2")
+            .HasColumnType("timestamp with time zone")
             .IsRequired();
 
         builder.Property(x => x.RevokedAt)
-            .HasColumnType("datetime2");
+            .HasColumnType("timestamp with time zone");
 
         builder.HasOne(x => x.User)
             .WithMany(x => x.RefreshTokens)
@@ -43,3 +43,4 @@ public sealed class RefreshTokenConfiguration : IEntityTypeConfiguration<Refresh
             .HasDatabaseName("IX_RefreshTokens_UserId_ExpiresAt");
     }
 }
+
