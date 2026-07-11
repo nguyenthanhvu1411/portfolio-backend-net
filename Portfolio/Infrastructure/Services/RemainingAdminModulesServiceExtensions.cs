@@ -20,7 +20,6 @@ public static class RemainingAdminModulesServiceExtensions
 {
     public static IServiceCollection AddRemainingAdminModules(this IServiceCollection services)
     {
-        services.TryAddScoped<IFileStorageService, LocalFileStorageService>();
         services.AddAdminUserModule();
         services.AddAdminSettingModule();
         services.AddAdminUploadModule();

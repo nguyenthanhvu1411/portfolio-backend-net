@@ -15,6 +15,8 @@ using Portfolio.Infrastructure.Persistence.Seed;
 using Portfolio.Infrastructure.Services;
 using Portfolio.Application.Common.Email;
 using Portfolio.Infrastructure.Email;
+using Portfolio.Infrastructure.Storage;
+using Portfolio.Application.Profiles.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -187,6 +189,36 @@ builder.Services.AddRateLimiter(options =>
                 cancellationToken);
     };
 });
+
+builder.Services.AddHttpClient<IFileStorageService, SupabaseFileStorageService>()
+    .ConfigureHttpClient(client =>
+    {
+        client.Timeout = TimeSpan.FromSeconds(60);
+    });
+
+builder.Services
+    .AddOptions<SupabaseStorageOptions>()
+    .Bind(
+        builder.Configuration.GetSection(
+            SupabaseStorageOptions.SectionName))
+    .Validate(
+        options =>
+            Uri.TryCreate(
+                options.Url,
+                UriKind.Absolute,
+                out _),
+        "SupabaseStorage:Url không hợp lệ.")
+    .Validate(
+        options =>
+            !string.IsNullOrWhiteSpace(
+                options.ApiKey),
+        "Thiếu SupabaseStorage:ApiKey.")
+    .Validate(
+        options =>
+            !string.IsNullOrWhiteSpace(
+                options.Bucket),
+        "Thiếu SupabaseStorage:Bucket.")
+    .ValidateOnStart();
 
 builder.Services.AddRemainingAdminModules();
 builder.Services.AddPublicPortfolioModule();

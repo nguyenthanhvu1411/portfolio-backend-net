@@ -10,7 +10,6 @@ public static class ProfileServiceExtensions
         this IServiceCollection services)
     {
         services.AddScoped<IAdminProfileService, AdminProfileService>();
-        services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
         return services;
     }
