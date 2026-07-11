@@ -247,6 +247,8 @@ builder.Services.AddTransient<
     IEmailSender,
     SmtpEmailSender>();
 
+builder.Services.AddHttpClient<BrevoEmailService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
