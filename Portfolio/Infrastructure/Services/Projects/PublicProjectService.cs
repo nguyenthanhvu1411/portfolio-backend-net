@@ -82,6 +82,7 @@ public sealed class PublicProjectService
             .Include(x => x.ProjectSkills)
                 .ThenInclude(x => x.Skill)
                     .ThenInclude(x => x.Category)
+            .Include(x => x.ProjectImages)
             .OrderByDescending(x => x.IsFeatured)
             .ThenByDescending(x => x.StartDate)
             .ThenByDescending(x => x.Id)
@@ -161,6 +162,7 @@ public sealed class PublicProjectService
             .Include(x => x.ProjectSkills)
                 .ThenInclude(x => x.Skill)
                     .ThenInclude(x => x.Category)
+            .Include(x => x.ProjectImages)
             .Where(x => x.IsActive);
 
     private static PublicProjectCardDto MapCard(
@@ -173,7 +175,12 @@ public sealed class PublicProjectService
             ShortDescription =
                 project.ShortDescription,
             ProjectType = project.ProjectType,
-            ThumbnailUrl = project.ThumbnailUrl,
+            ThumbnailUrl = project.ThumbnailUrl ?? project.ProjectImages
+                .OrderByDescending(x => x.IsThumbnail)
+                .ThenBy(x => x.DisplayOrder)
+                .ThenBy(x => x.Id)
+                .Select(x => x.ImageUrl)
+                .FirstOrDefault(),
             StartDate = project.StartDate,
             EndDate = project.EndDate,
             Status = project.Status,
@@ -204,7 +211,12 @@ public sealed class PublicProjectService
                 project.FullDescription,
             Role = project.Role,
             ProjectType = project.ProjectType,
-            ThumbnailUrl = project.ThumbnailUrl,
+            ThumbnailUrl = project.ThumbnailUrl ?? project.ProjectImages
+                .OrderByDescending(x => x.IsThumbnail)
+                .ThenBy(x => x.DisplayOrder)
+                .ThenBy(x => x.Id)
+                .Select(x => x.ImageUrl)
+                .FirstOrDefault(),
             GithubUrl = project.GithubUrl,
             DemoUrl = project.DemoUrl,
             StartDate = project.StartDate,
